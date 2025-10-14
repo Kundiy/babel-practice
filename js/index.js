@@ -1,0 +1,54 @@
+function Student(name, surname, yearOfBirth, grades) {
+    this.name = name;
+    this.surname = surname;
+    this.yearOfBirth = parseInt(yearOfBirth);
+    this.grades = Array.isArray(grades) ? grades.map(Number) : [];
+    this.attendance = new Array(25).fill(null);
+}
+Student.prototype.getAge = function () {
+    return new Date().getFullYear() - this.yearOfBirth;
+};
+
+Student.prototype.getAverageGrades = function () {
+    if (this.grades.length === 0) {
+        return 0;
+    }
+    const sum = this.grades.reduce((acc, val) => acc + val, 0);
+    const average = sum / this.grades.length;
+    return average
+
+}
+
+Student.prototype.present = function () {
+    const index = this.attendance.indexOf(null);
+    if(index !== -1){
+        this.attendance[index] = true;
+    } else {
+        console.log('It is full')
+    }
+}
+
+Student.prototype.absent = function () {
+    const index = this.attendance.indexOf(null);
+    if (index !== -1) {
+        this.attendance[index] = false;
+    } else {
+        console.log("It is full");
+    }
+}
+Student.prototype.summary = function () {
+    const avgGrade = this.getAverageGrades();
+    const attended = this.attendance.filter(val => val === true).length;
+    console.log(`${this.name} ${this.surname} was present at ${attended} lections`);
+    const result = attended / this.attendance.length;
+
+    if(result >= 0.9 && avgGrade >= 90){
+        console.log('You are cool')
+    } else if(result < 0.9 && avgGrade < 90){
+        console.log('You are radish')
+    } else{
+        console.log('You can better')
+    }
+    return result
+
+
