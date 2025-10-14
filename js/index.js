@@ -49,6 +49,6 @@ Student.prototype.summary = function () {
     } else{
         console.log('You can better')
     }
-    return result
+    return result}
 
 
